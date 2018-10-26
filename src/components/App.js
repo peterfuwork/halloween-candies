@@ -29,15 +29,17 @@ class App extends Component {
       },[]);
       console.log(candies)
 
-      let randomStates = this.random(states);
-      let randomBars = this.random(candies);
+      let randomStates = this.shuffle(states);
+      let randomBars = this.shuffle(candies);
       randomBars = this.remove_duplicates(randomBars);
+      console.log(randomStates);
       console.log(randomBars);
-      
+
       this.setState({
         stars: states,
         bars: candies,
-        randomStates: randomStates
+        randomStates: randomStates,
+        randomBars: randomBars
       })
   }
 
@@ -53,16 +55,16 @@ class App extends Component {
     return ret_arr;
   }
 
-  random(arr) {
-    let randomArr = [];
-    for(let i = 0; i < arr.length; i++){
-      let selector = Math.floor(Math.random() * arr.length);
-      while(randomArr.indexOf(arr[selector]) !== -1){
-          selector = Math.floor(Math.random() * arr.length);
-      }
-      randomArr[i] = arr[selector];
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
     }
-    return randomArr;
+    return array;
   }
 
   
@@ -71,9 +73,10 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container-custom">
-          <Dropdowns
-            stars={this.random(this.state.stars)}/>
-          <Answer />
+          <Dropdowns 
+          randomStates={this.state.randomStates}
+          randomBars={this.state.randomBars} />
+          <Answer  />
         </div>
       </div>
     );
