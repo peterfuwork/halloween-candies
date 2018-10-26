@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import Dropdowns from './Dropdowns';
-import Answer from './Answer';
 
 class App extends Component {
   constructor() {
     super();
-
     this.state = {
       stars: [],
       favoriteCandyLand: [],
       bars: [],
       randomStates: [],
-      randomBars: []
+      randomBars: [],
+      selectedState: '',
+      selectedBar: '',
+      correctOrNot: null,
     }
   }
 
@@ -55,7 +56,8 @@ class App extends Component {
     return ret_arr;
   }
 
-  shuffle(array) {
+  shuffle(list) {
+    let array = [...list];
     var currentIndex = array.length, temporaryValue, randomIndex;
     while (0 !== currentIndex) {
       randomIndex = Math.floor(Math.random() * currentIndex);
@@ -67,16 +69,52 @@ class App extends Component {
     return array;
   }
 
-  
+  checkPair = (e) => {
+    e.preventDefault();    
+    if(this.state.selectedBar !== '' && this.state.selectedState !== ''){
+      let stateIndex = this.state.stars.indexOf(this.state.selectedState)
+      console.log(this.state.stars)
+      let barIndexArr = this.state.bars.map(item => {
+        if(item === this.state.selectedBar){
+          return item;
+        }
+        else{
+          return '';
+        }
+      })
+      this.setState({
+        correctOrNot: (barIndexArr[stateIndex] === this.state.selectedBar)
+      })  
+    } 
+  }
+
+  handleStateSelect = (e) => {
+    this.setState({
+      selectedState: e.target.value
+    })
+  }
+
+  handleBarSelect = (e) => {
+    this.setState({
+      selectedBar: e.target.value
+    })
+  }
+
   render() {
     
     return (
       <div className="App">
         <div className="container-custom">
-          <Dropdowns 
+        <Dropdowns 
           randomStates={this.state.randomStates}
-          randomBars={this.state.randomBars} />
-          <Answer  />
+          randomBars={this.state.randomBars}
+          handleStateSelect={this.handleStateSelect}
+          handleBarSelect={this.handleBarSelect}
+          selectedState={this.state.selectedState}
+          selectedBar={this.state.selectedBar}
+          checkPair={this.checkPair}
+          correctOrNot={this.state.correctOrNot}
+           />
         </div>
       </div>
     );

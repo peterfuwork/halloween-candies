@@ -1,4 +1,39 @@
 .container-custom {
-    background-color:greenyellow;
-    
+    background-color:#fff;
+    border:1px solid #ccc;
+    padding: 1rem;
+    background-image: url('../assets/halloween.png');
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    .dropdown {
+        h2 {
+            margin: 1rem auto;
+            max-width: 700px;
+            line-height: 1.6;
+            .spooky {
+                font-family: 'Mali', cursive;
+                color: red;
+                display: inline;
+            }
+        }
+        select {
+            display: block;
+            margin: 1rem auto;
+        }
+        span {
+            display: block;
+            margin: 1rem 0;
+        }
+    }
+    .loading{
+        img {
+            width:20px;
+            display: block;
+            margin: 1rem auto;
+        }
+    }
+    .answer {
+        max-width: 300px;
+        margin: 1rem auto;
+    }
 }
